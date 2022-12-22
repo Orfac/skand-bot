@@ -5,19 +5,19 @@ import skanderbeg.SkanderbegClient
 import skanderbeg.SkanderbegException
 
 
-suspend fun main(args: Array<String>) {
+suspend fun main() {
     val token = System.getenv("BOT_TOKEN")
-    val skanderbegClient = SkanderbegClient()
+    val skanderbegClient = SkanderbegClient(System.getenv("SKANDERBEG_KEY"))
     val formatter = Formatter()
     val client = DiscordClient.create(token)
 
-    val gateway = client.login().block()
+    val gateway = client.login().block()!!
 
 
     gateway.on(MessageCreateEvent::class.java).subscribe { event: MessageCreateEvent ->
         val message = event.message
         if (message.content.startsWith(">dc ")) {
-            val channel = message.channel.block()
+            val channel = message.channel.block()!!
             val url = message.content.replace(">dc https://skanderbeg.pm/browse.php?id=", "")
             runBlocking {
                 var resultMessage = "Sorry, looks like bot or skanderbeg are not feeling well"
@@ -32,11 +32,11 @@ suspend fun main(args: Array<String>) {
                 } catch (ex: Exception) {
                     println(ex)
                 } finally {
-                    if (resultMessage.length <= 2000){
-                        channel.createMessage(resultMessage).block()
+                    if (resultMessage.length <= 2000) {
+                        channel.createMessage(resultMessage)?.block()
                     } else {
                         messages.forEach {
-                            channel.createMessage("```\n$it\n```").block()
+                            channel.createMessage("```\n$it\n```")?.block()
                         }
                     }
 
@@ -50,11 +50,10 @@ suspend fun main(args: Array<String>) {
     gateway.onDisconnect().block()
 
 
-
 }
 
-suspend fun localRun(){
-    val skanderbegClient = SkanderbegClient()
+suspend fun localRun() {
+    val skanderbegClient = SkanderbegClient(System.getenv("SKANDERBEG_KEY"))
     val formatter = Formatter()
     val devClicks = skanderbegClient.getCountryDevClicks("b26ee5")
     val messages = formatter.formatDevClicks(devClicks)

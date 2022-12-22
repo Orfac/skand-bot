@@ -9,9 +9,8 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 
-class SkanderbegClient {
+class SkanderbegClient(val apiKey: String) {
 
-    private val apiKey = System.getenv("SKANDERBEG_KEY")
     private val SKANDERBEG_URL = "https://skanderbeg.pm/api/eu4/getLedgerDataNew.php"
     private val client = HttpClient(CIO) {
         defaultRequest {
@@ -26,13 +25,13 @@ class SkanderbegClient {
 //            parameter("key", apiKey)
             setBody(DevClicksFormDefault().value)
         }
-        if (response.status != HttpStatusCode.OK ){
+        if (response.status != HttpStatusCode.OK) {
             throw Exception("Received status code ${response.status}")
         }
         val value = response.bodyAsText()
 
         val resultValue = Gson().fromJson(value, StatsDto::class.java)
-        if (resultValue.data == null){
+        if (resultValue.data == null) {
             throw SkanderbegException("Received empty data for your save\nMight be skanderbeg saves are not working now")
         }
         return resultValue.data.map { CountryAndDevClicks(getName(it), getDevClicks(it)) }.toList();
