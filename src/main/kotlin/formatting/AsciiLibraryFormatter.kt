@@ -1,10 +1,11 @@
-import de.vandermeer.asciitable.AT_ColumnWidthCalculator
+package formatting
+
+import CountryAndDevClicks
 import de.vandermeer.asciitable.AsciiTable
-import de.vandermeer.skb.interfaces.document.TableRowStyle
 
 
-class Formatter {
-    fun formatDevClicks(devClicks: List<CountryAndDevClicks>): List<String> {
+class AsciiLibraryFormatter : Formatter {
+    override fun formatDevClicks(devClicks: List<CountryAndDevClicks>): List<String> {
         var at = AsciiTable()
         at.addRule()
         at.addRow("№", "Country", "Development Clicks");
@@ -18,7 +19,7 @@ class Formatter {
                 pos++
                 at.addRule();
                 counter++
-                if (counter == 9){
+                if (counter == 9) {
                     counter == 0
                     messages.add(at.render(50))
                     at = AsciiTable()
@@ -26,7 +27,7 @@ class Formatter {
                 }
             }
 
-        if (counter != 0){
+        if (counter != 0) {
             messages.add(at.render(50))
         }
         messages.forEach {
