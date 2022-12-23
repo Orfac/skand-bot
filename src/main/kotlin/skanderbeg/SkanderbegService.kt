@@ -4,16 +4,19 @@ import formatting.Formatter
 import discord4j.core.`object`.entity.Message
 import kotlinx.coroutines.reactor.awaitSingle
 
-class SkanderbegService(private val skanderbegClient: SkanderbegClient, private val formatter: Formatter) {
+private const val SORRY_MESSAGE = "Sorry, looks like bot or skanderbeg are not feeling well"
+
+class SkanderbegService(
+    private val skanderbegClient: SkanderbegClient,
+    private val formatter: Formatter
+) {
     suspend fun processMessage(message: Message) {
         if (!message.content.startsWith(">dc ")) {
             return
         }
-
         val channel = message.channel.block()!!
         val url = message.content.replace(">dc https://skanderbeg.pm/browse.php?id=", "")
-
-        var resultMessage = "Sorry, looks like bot or skanderbeg are not feeling well"
+        var resultMessage = SORRY_MESSAGE
         var messages = emptyList<String>()
         try {
             val devClicks = skanderbegClient.getCountryDevClicks(url)
@@ -32,9 +35,6 @@ class SkanderbegService(private val skanderbegClient: SkanderbegClient, private 
                     channel.createMessage("```\n$it\n```").awaitSingle()
                 }
             }
-
         }
-
-
     }
 }

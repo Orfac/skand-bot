@@ -1,4 +1,3 @@
 package skanderbeg
 
-class SkanderbegException(message: String?) : Exception(message) {
-}
+class SkanderbegException(message: String?) : Exception(message)
