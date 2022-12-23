@@ -3,7 +3,6 @@ package formatting
 import CountryAndDevClicks
 import de.vandermeer.asciitable.AsciiTable
 
-
 class AsciiLibraryFormatter : Formatter {
     override fun formatDevClicks(devClicks: List<CountryAndDevClicks>): List<String> {
         var at = AsciiTable()
@@ -26,7 +25,6 @@ class AsciiLibraryFormatter : Formatter {
                     at.addRule()
                 }
             }
-
         if (counter != 0) {
             messages.add(at.render(50))
         }

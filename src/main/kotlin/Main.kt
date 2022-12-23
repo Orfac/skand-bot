@@ -9,7 +9,8 @@ import skanderbeg.SkanderbegService
 
 suspend fun main() {
     val token = System.getenv("BOT_TOKEN")
-    val skanderbegService = SkanderbegService(SkanderbegClient(System.getenv("SKANDERBEG_KEY")), AsciiLibraryFormatter())
+    val skanderbegService =
+        SkanderbegService(SkanderbegClient(System.getenv("SKANDERBEG_KEY")), AsciiLibraryFormatter())
 
     val client = DiscordClient.create(token)
 
@@ -21,10 +22,7 @@ suspend fun main() {
                     skanderbegService.processMessage(it.message)
                 }
         }
-    }
-        .block()
-
-
+    }.block()
 }
 
 suspend fun localRun() {

@@ -2,6 +2,6 @@ package formatting
 
 import CountryAndDevClicks
 
-open interface Formatter {
+interface Formatter {
     fun formatDevClicks(devClicks: List<CountryAndDevClicks>): List<String>
 }
