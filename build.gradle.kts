@@ -7,18 +7,17 @@ plugins {
 
 group = "org.orfac"
 version = "1.0-SNAPSHOT"
-val ktor_version: String by project
+val ktorVersion: String by project
 
 repositories {
     mavenCentral()
-
 }
 
 
 
 dependencies {
-    implementation("io.ktor:ktor-client-core:$ktor_version")
-    implementation("io.ktor:ktor-client-cio:$ktor_version")
+    implementation("io.ktor:ktor-client-core:$ktorVersion")
+    implementation("io.ktor:ktor-client-cio:$ktorVersion")
     implementation ("com.google.code.gson:gson:2.10")
     implementation("com.discord4j:discord4j-core:3.2.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
