@@ -1,6 +1,7 @@
 import discord4j.core.DiscordClient
 import discord4j.core.event.domain.message.MessageCreateEvent
 import formatting.AsciiLibraryFormatter
+import formatting.CompactFormatter
 import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.reactor.mono
 import skanderbeg.SkanderbegClient
@@ -25,12 +26,13 @@ suspend fun main() {
     }.block()
 }
 
-suspend fun localRun() {
+suspend fun mainLocal() {
     val skanderbegClient = SkanderbegClient(System.getenv("SKANDERBEG_KEY"))
-    val formatter = AsciiLibraryFormatter()
+    val formatter = CompactFormatter()
     val devClicks = skanderbegClient.getCountryDevClicks("b26ee5")
     val messages = formatter.formatDevClicks(devClicks)
-    val resultMessage = messages.joinToString()
+
+    val resultMessage = messages.joinToString(separator ="")
     if (resultMessage.length <= 2000) {
         println(resultMessage)
     } else {
